@@ -10,7 +10,8 @@ export default function App() {
   // Function to handle input change
   function handleInputOnChange(event) {
     // Removes any leading zero and any non-digit character
-    const sanitizedValue = event.target.value.replace(/^0(?=\d)|[^0-9]/g, "");
+    const sanitizedRegex = /(^0+(?=\d))|([^\d])/g;
+    const sanitizedValue = event.target.value.replace(sanitizedRegex, "");
     // Update the inputValue
     setInputValue(sanitizedValue);
   }
