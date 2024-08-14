@@ -24,8 +24,6 @@ export default function App() {
     let differenceNumber = Math.abs(inputValue - reverseNumber);
     let fizzBuzzState = getFizzOrBuzz(differenceNumber);
     let fibonacciState = getFibonacci(differenceNumber);
-    
-    console.log(`fibonacciState: ${fibonacciState}`)
     // Update the reverse result with the current input value
     setReverse(reverseNumber);
     setDifference(differenceNumber);
@@ -40,10 +38,11 @@ export default function App() {
     let checkFizzOrBuzz = "";
 
     fibonacciArray.push(prev);
-    fibonacciArray.push(now);
+    if(differenceNumber >= 1){
+      fibonacciArray.push(now);
+    }
 
     while((prev+now) <= differenceNumber){
-      console.log(`prev+now <= differenceNumber: ${prev}, ${now}, ${differenceNumber}`)
       next = prev + now;
       prev = now;
       now = next;
@@ -87,7 +86,11 @@ export default function App() {
       </div>
       <div>Reverse: {reverse}</div>
       <div>Difference: {difference}</div>
-      <div>Fizz Or Buzz: {fizzBuzz}</div>
+      <div>Fizz Or Buzz: {fizzBuzz}
+        { difference <= 0 &&      
+          <div><i>O is FizzBuzz Because 0 % 5 and 0 % 3 are 0</i></div>
+        }
+      </div>
       <div>Fibonacci: {fibonacci}</div>
     </div>
   );
