@@ -6,6 +6,8 @@ export default function App() {
   const [inputValue, setInputValue] = useState("");
   const [reverse, setReverse] = useState(0); // State to hold the reverse result
   const [difference, setDifference] = useState(0); // State to hold the difference result
+  const [fizzBuzz, setFizzBuzz] = useState(0); // State to hold the difference result
+  const [fibonacci, setFibonacci] = useState(""); // State to hold the difference result
 
   // Function to handle input change
   function handleInputOnChange(event) {
@@ -19,9 +21,54 @@ export default function App() {
   // Function to handle the submit button click
   function handleInputOnSubmit() {
     let reverseNumber = getReverse(inputValue);
+    let differenceNumber = Math.abs(inputValue - reverseNumber);
+    let fizzBuzzState = getFizzOrBuzz(differenceNumber);
+    let fibonacciState = getFibonacci(differenceNumber);
+    
+    console.log(`fibonacciState: ${fibonacciState}`)
     // Update the reverse result with the current input value
     setReverse(reverseNumber);
-    setDifference(Math.abs(inputValue - reverseNumber));
+    setDifference(differenceNumber);
+    setFizzBuzz(fizzBuzzState);
+    setFibonacci(fibonacciState.join(", "));
+  }
+
+  function getFibonacci(differenceNumber) {
+    let fibonacciArray = [];
+    let prev = 0, now = 1;
+    let next = 1;
+    let checkFizzOrBuzz = "";
+
+    fibonacciArray.push(prev);
+    fibonacciArray.push(now);
+
+    while((prev+now) <= differenceNumber){
+      console.log(`prev+now <= differenceNumber: ${prev}, ${now}, ${differenceNumber}`)
+      next = prev + now;
+      prev = now;
+      now = next;
+      checkFizzOrBuzz = getFizzOrBuzz(next);
+      if(checkFizzOrBuzz){
+        fibonacciArray.push(checkFizzOrBuzz);
+      }else{
+        fibonacciArray.push(next);
+      }
+    }
+    
+    return fibonacciArray;
+  }
+
+  function getFizzOrBuzz(differenceNumber) {
+    let state = "";
+    if(differenceNumber%3 === 0){
+      state += "Fizz";
+    }
+
+    if(differenceNumber%5 === 0){
+      state += "Buzz";
+    }
+    
+    return state;
   }
 
   function getReverse(stringNumber) {
@@ -40,6 +87,8 @@ export default function App() {
       </div>
       <div>Reverse: {reverse}</div>
       <div>Difference: {difference}</div>
+      <div>Fizz Or Buzz: {fizzBuzz}</div>
+      <div>Fibonacci: {fibonacci}</div>
     </div>
   );
 }
